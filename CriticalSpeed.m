@@ -29,7 +29,7 @@ function weight = W_i(i,rho,dA,dmid,dB)
     % should be in Netwons 
 end
 
-function polarM = I_i(i,d1,d2,d3)
+function polarM = I_i(i,dA,dmid,dB)
    
 end 
 
