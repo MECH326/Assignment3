@@ -1,4 +1,4 @@
-function [A, B] = calc_reaction_forces(dA, dmid, dB, F_H, F_S)
+function [A, B] = calc_reaction_forces(dA, dmid, dB)
 % compute the reaction forces at points A and B
     % dA is the shaft diameter between point A and the helical gear
     % dmid is the shaft diameter between the two gears
@@ -38,10 +38,9 @@ function [A, B] = calc_reaction_forces(dA, dmid, dB, F_H, F_S)
     By = ((1200+w_S)*0.575 + (6600+w_H)*0.175 + (0.7-x)*w_shaft)/0.700;
 
     % Find Bz: Balance y-moments about A
-    Bz = (3300*0.575 + 2400*0.175 + F_H(1)*r_H)/0.700;
+    Bz = (3300*0.575 + 2400*0.175 + 0.9*r_H)/0.700;
 
     B = [Bx By Bz];
 
 end
-
 
