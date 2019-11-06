@@ -33,7 +33,8 @@ function weight = W_i(i,rho,dA,dmid,dB)
 end
 
 function polarM = I_i(i,dA,dmid,dB)
-   [I,J] = compute
+   [I,J] = compute_moments(dA,dmid,dB);
+   if (
 end 
 
 % density: http://www.matweb.com/search/DataSheet.aspx?MatGUID=10b74ebc27344380ab16b1b69f1cffbb&ckck=1
