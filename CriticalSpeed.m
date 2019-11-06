@@ -1,9 +1,12 @@
-function passed = criticalSpeedCheck(dA,dmid,dB,safetyFactor)
+function passed = CriticalSpeed(dA,dmid,dB,safetyFactor)
     % constants
     operating_w = 1200*2*pi/60; % rad/s
     E = 184E9; %PA
     rho = 7870; %kg/m^3
-
+    
+    
+    
+    
     passed = true;
 end 
 
@@ -30,7 +33,15 @@ function weight = W_i(i,rho,dA,dmid,dB)
 end
 
 function polarM = I_i(i,dA,dmid,dB)
-   
+   [I,J] = compute_moments(dA,dmid,dB);
+   polarM = 0;
+   if i <= 45
+       polarM = I(1);
+   elseif ( 46<= i && i<= 110)
+       polarM = I(2);
+   elseif 140>= i
+       polarM = I(3);
+   end 
 end 
 
 % density: http://www.matweb.com/search/DataSheet.aspx?MatGUID=10b74ebc27344380ab16b1b69f1cffbb&ckck=1
