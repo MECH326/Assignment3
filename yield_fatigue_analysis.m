@@ -22,7 +22,7 @@ function [n_yield, n_fatigue] = yield_fatigue_analysis(sigma_bend, sigma_axial, 
     sigma_m_axial = sigma_axial;
     tau_m = tau;
 
-    sigma_m_prime = sqrt((Kf_bend_sigma_m_bend + Kf_axial*sigma_m_axial)^2 + 3*Kfs*tau_m^2);    % Shigleys Eq 6-56
+    sigma_m_prime = sqrt((Kf_bend*sigma_m_bend + Kf_axial*sigma_m_axial)^2 + 3*Kfs*tau_m^2);    % Shigleys Eq 6-56
 
     %% Check for yield
     sigma_max_prime = sigma_a_prime + sigma_m_prime;    % Conservative simplification
