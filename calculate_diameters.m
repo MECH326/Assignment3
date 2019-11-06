@@ -21,8 +21,8 @@ Mz = Ay*0.225-(Ay-6600-w_H)*0.050;
 My = Az*0.225-(Az-2400)*0.050 + (900*r_H);
 
 % Stress conc. factors
-Kt = 1.8;   % r/d = 0.08, D/d = 1.4 read graph A-15-9
-Kts = 1.45; % same ratios read graph A-15-8;
+Kf = 0;
+Kfs = 0;
 
 % Von Mises alternating
 % Fully reversed x and y stresses, zero midrange
@@ -48,13 +48,13 @@ sigma_m_prime = sqrt(sigma_m^2 + 3*tau_m^2);
 %% Check for yield
 sigma_max = sqrt((sigma_a + sigma_m)^2 + 3*(tau_a + tau_m)^2);
 
-Sy = 294.74e6;
+Sy = 350e6;
 
 n = Sy/sigma_max;
 
 %% Check for fatigue
-Sut = 394.72e6;
-Se = 0.5*Sut;
+Sut = 420e6;
+Se_prime = 0.5*Sut;
 
 
 
