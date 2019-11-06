@@ -1,4 +1,4 @@
-function [I, J] = compute_moments(dA, dmin, dB)
+function [I, J] = compute_moments(dA, dmid, dB)
 % find the moment of inertia (I) and polar moment of area (J) for the shaft
 % I and J are row vectors with 3 elements, corresponding to the three sections of shaft:
   % dA is the shaft diameter between between point A and helical gear
