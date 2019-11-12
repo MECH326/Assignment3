@@ -21,7 +21,7 @@ sigmabend2=M2/I(3);
 %% stress due to compression
 
 sigmacompress1=0;
-sigmacompress1=F1(1)/(pi*R3^2);
+sigmacompress1=F1(1)/(pi*RB^2);
 
 
 %% shear stress due to torsion
