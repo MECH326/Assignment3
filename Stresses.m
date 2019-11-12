@@ -1,4 +1,4 @@
-function [ MaxStress ] = Stresses( A,B,F1,F2,R1,R2,R3,p,T,M1,M2 )
+function [ Bend,compress,Tau,location] = Stresses( A,B,F1,F2,R1,R2,R3,p,T,M1,M2 )
 %Taking forces on A, A and forces on B, the gear forces F1 and F2
 %   Detailed explanation goes here
 
