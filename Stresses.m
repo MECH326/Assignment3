@@ -1,9 +1,9 @@
-function [ Bend,compress,Tau,location] = Stresses( A,B,F1,F2,R1,R2,R3,p,T,M1,M2 )
+function [ Bend,compress,Tau,location,diameter] = Stresses( A,B,F1,F2,RA,Rmid,RB,p,T,M1,M2 )
 %Taking forces on A, A and forces on B, the gear forces F1 and F2
 %   Detailed explanation goes here
 
 %% getting moments of inertia
-[I,J]=compute_moments(2*R1,2*R2,2*R3)
+[I,J]=compute_moments(2*RA,2*R2,2*R3)
 %% Finding moment at the shoulders
 M1Z=-A(2)*(.175)+p*PI()*R1^2*(.175)^2;
 M1Y=A(3)*(.175)+F1(1)*.1;
@@ -27,3 +27,10 @@ sigmacompress1=F1(1)/(pi*R3^2);
 %% shear stress due to torsion
 Tau1=T/J(1)
 Tau2=T/J(3)
+
+%check critical location
+
+if (sigmabend1+sigmacompress1)>(sigmabend2+sigmacompress2)
+    Tau=Tau1
+    compress=compress1
+    Bend=
