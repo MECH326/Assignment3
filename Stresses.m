@@ -21,7 +21,7 @@ sigmabend2=M2/I(3);
 %% stress due to compression
 
 sigmacompress1=0;
-sigmacompress1=F1(1)/(pi*RB^2);
+sigmacompress2=F1(1)/(pi*RB^2);
 
 
 %% shear stress due to torsion
@@ -32,15 +32,15 @@ Tau2=T/J(3);
 
 if (sigmabend1+sigmacompress1)>(sigmabend2+sigmacompress2)
     Tau=Tau1;
-    compress=compress1;
+    compress=sigmacompress1;
     Bend=sigmabend1;
-    Location=1;
-    Diameter=RA*2;
+    location=1;
+    diameter=RA*2;
 else
     Tau=Tau2;
-    compress=compress2;
+    compress=sigmacompress2;
     Bend=sigmabend2;
-    Location=2;
-    Diameter=RB*2;
+    location=2;
+    diameter=RB*2;
 end
 %%
