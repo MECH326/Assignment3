@@ -26,4 +26,4 @@ sigmacompress1=F1(1)/(pi*R3^2);
 
 %% shear stress due to torsion
 Tau1=T/J(1)
-Tau2=T/J(2)
+Tau2=T/J(3)
