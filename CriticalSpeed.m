@@ -3,9 +3,6 @@ function passed = CriticalSpeed(dA,dmid,dB,safetyFactor)
     operating_w = 1200*2*pi/60 % rad/s
     E = 184E9; %PA
     rho = 7870; %kg/m^3
-    dA = 1; 
-    dmid = 2; 
-    dB = 3; 
     
     sum = 0; % keeping track of the sum of all the frequencies
     cells = 140; 
