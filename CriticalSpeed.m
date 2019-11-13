@@ -1,13 +1,29 @@
 function passed = CriticalSpeed(dA,dmid,dB,safetyFactor)
     % constants
-    operating_w = 1200*2*pi/60; % rad/s
+    operating_w = 1200*2*pi/60 % rad/s
     E = 184E9; %PA
     rho = 7870; %kg/m^3
     
+    sum = 0; % keeping track of the sum of all the frequencies
+    cells = 140; 
+    length = 0.7; 
+    cellLength = length/cells; 
     
-    
-    
-    passed = true;
+    for i = 1:140
+        test = i;
+        % going through and calculating
+        x_i = cellLength* (test-0.5); % mid point of each cell
+        I = I_i(test, dA, dmid, dB);
+        m_i = W_i(test,rho,dA,dmid,dB)/9.81; %convert  to mass
+        mDelta = m_i*x_i^2*(length-x_i)/(3*E*I);
+        sum = sum + mDelta;
+    end 
+    criticalFrequency = sqrt(1/sum)
+    if criticalFrequency >= safetyFactor*operating_w
+        passed = true;  
+    else 
+        passed = false; 
+    end 
 end 
 
 function weight = W_i(i,rho,dA,dmid,dB)
@@ -28,7 +44,7 @@ function weight = W_i(i,rho,dA,dmid,dB)
     else
         %nothign, if it gets to here something is wrong
     end 
-    weight = mass *9.81; %if its zero, something is wrong
+    weight = mass*9.81; %if its zero, something is wrong
     % should be in Netwons 
 end
 
