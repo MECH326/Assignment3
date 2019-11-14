@@ -4,7 +4,7 @@ d1 = 0.095;  % gear shoulder (must be 5-15 mm greater than gear bore)
 d2 = 0.090;  % gear bore
 d3 = 0.080;    % bearing bore
 
-[A, B] = calc_reaction_forces(d1, d2);
+[A, B] = calc_reaction_forces(d2, d1, d2);
 
 F_H = [900 -6600 -2400];
 F_S = [0 -1200 -3300];
