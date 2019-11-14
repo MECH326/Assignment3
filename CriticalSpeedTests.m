@@ -1,0 +1,1 @@
+test = CorrectCriticalSpeed(1,1,1,3)

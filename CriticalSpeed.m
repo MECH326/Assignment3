@@ -26,6 +26,7 @@ function passed = CriticalSpeed(dA,dmid,dB,safetyFactor)
     end 
 end 
 
+% compute the weights of various cross sections as you go across the beam
 function weight = W_i(i,rho,dA,dmid,dB)
     mass = 0;
     cellLength = 5/1000; %m
