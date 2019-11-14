@@ -5,14 +5,14 @@ function [ Bend,compress,Tau,location,diameter] = Stresses( A,B,F1,F2,RA,Rmid,RB
 %% getting moments of inertia
 [I,J]=compute_moments(2*RA,2*Rmid,2*RB);
 %% Finding moment at the shoulders
-M1Z=-A(2)*(.175)+9.81*p*pi()*RA^2*(.175)^2/2;
-M1Y=A(3)*(.175)+F1(1)*.1;
+M1Z=-A(2)*(.225)+9.81*p*pi()*RA^2*(.225)^2/2+M1*.05;
+M1Y=A(3)*(.225)+F1(3)*.05+900*.1;
 
 M1=sqrt(M1Z^2+M1Y^2);
 sigmabend1=M1/I(1);
 
-M2Z=-A(2)*(.675)+F1(2)*.4+M1*.4+9.81*p*pi()*RA^2*.175*(.4+.175/2)+9.81*p*pi()*Rmid^2*(.4)^2/2;
-M2Y=A(3)*(.175)+F1(1)*.1-F1(2)*.4;
+M2Z=-A(2)*(.550)+F1(2)*.375+M1*.375+9.81*p*pi()*RA^2*.225*(.325+.225/2)+9.81*p*pi()*Rmid^2*(.325)^2/2;
+M2Y=A(3)*(.550)+F1(3)*.375+900*.1;
 
 M2=sqrt(M2Y^2+M2Z^2);
 sigmabend2=M2/I(3);
