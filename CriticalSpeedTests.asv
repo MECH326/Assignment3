@@ -1,0 +1,12 @@
+[test, criticalSpeed] = CorrectCriticalSpeed(0.01,0.01,0.01,3)
+[test2, criticalSpeed2] = CriticalSpeed(0.01,0.01,0.01,3)
+
+%uniform beam test using beam tables
+totalLength = 0.7; 
+radius = 0.1/2; 
+E = 184E9;
+rho = 7870; %kg/m^3;
+mass_Beam = radius^2 *totalLength*rho;
+[I,J] = compute_moments(radius*2,radius*2,radius*2);
+shaftFrequency = 9.87/totalLength^2*sqrt(E*I(1) /mass_Beam);
+frequency_spurGear = 1.73*sqrt( (E*I(1)*totalL )

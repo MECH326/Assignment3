@@ -1,6 +1,6 @@
-function passed = CriticalSpeed(dA,dmid,dB,safetyFactor)
+function [passed,criticalSpeed] = CriticalSpeed(dA,dmid,dB,safetyFactor)
     % constants
-    operating_w = 1200*2*pi/60 % rad/s
+    operating_w = 1200 % rad/s
     E = 184E9; %PA
     rho = 7870; %kg/m^3
     
@@ -18,8 +18,9 @@ function passed = CriticalSpeed(dA,dmid,dB,safetyFactor)
         mDelta = m_i*x_i^2*(length-x_i)/(3*E*I);
         sum = sum + mDelta;
     end 
-    criticalFrequency = sqrt(1/sum)
-    if criticalFrequency >= safetyFactor*operating_w
+    criticalFrequency = sqrt(1/sum);
+    criticalSpeed = criticalFrequency/(2*pi())*60;
+    if criticalSpeed >= safetyFactor*operating_w
         passed = true;  
     else 
         passed = false; 

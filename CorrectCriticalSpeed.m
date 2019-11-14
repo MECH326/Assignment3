@@ -1,9 +1,30 @@
 
 %main function that is used to evaulate if the part passes in speed
 function [passed,criticalSpeed] = CorrectCriticalSpeed(dA,dmid,dB,safetyFactor)
-    operatingCondition = 1200*2*pi/60;
-    passed = deflectionAtX(dA,dmid,dB,0.7);
-    criticalSpeed =1;
+    % some constants
+    operatingCondition = 1200;
+    g = 9.81;
+    [d_AtoM1, d_AtoM2,d_AtoM3,d_AtoM4,d_AtoM5,d_AtoC,d_AtoD] = populateDistances();
+    
+    % now we should get some deflections:
+    [F_A, F_g1, F_g2,F_g3, F_g4, F_g5, F_B] = weightsBalance(dA,dmid,dB);
+    deflection_M1 = deflectionAtX(dA,dmid,dB,d_AtoM1)
+    deflection_M2 = deflectionAtX(dA,dmid,dB,d_AtoM2)
+    deflection_M3 = deflectionAtX(dA,dmid,dB,d_AtoM3)
+    deflection_M4 = deflectionAtX(dA,dmid,dB,d_AtoM4)
+    deflection_M5 = deflectionAtX(dA,dmid,dB,d_AtoM5)
+    
+    %using rayleigh's equation
+    numerator = abs(g*(F_g1*deflection_M1+  F_g2*deflection_M2 + F_g3*deflection_M3 + F_g4*deflection_M4 +F_g5*deflection_M5));
+    denominator = abs((F_g1*deflection_M1^2+  F_g2*deflection_M2^2 + F_g3*deflection_M3^2 + F_g4*deflection_M4^2 +F_g5*deflection_M5^2));
+    criticalSpeed = sqrt(numerator/denominator)/(2*pi())*60; %rev/min
+    
+    if operatingCondition *safetyFactor < criticalSpeed
+        passed = true; 
+    else
+        passed = false; 
+    end 
+    
 end 
 
 % passes on a list of known distance values
@@ -105,7 +126,7 @@ function deflectionTotal = deflectionAtX(dA, dmid, dB,x)
     elseif (x>d_AtoM4 && x<= d_AtoM5)
         deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2+ deflection_Mass3+ deflection_JumpD+ deflection_Mass4+ c_1*x;
     elseif (x>d_AtoM4 &&  x<= totalLength)
-        deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2+ deflection_Mass3+ deflection_JumpD+ deflection_Mass4+ deflection_Mass5+c_1*x
+        deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2+ deflection_Mass3+ deflection_JumpD+ deflection_Mass4+ deflection_Mass5+c_1*x;
     end 
     deflectionTotal = 1/E* deflectionTotal;
 

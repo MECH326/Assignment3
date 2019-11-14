@@ -1,9 +1,17 @@
 
 %main function that is used to evaulate if the part passes in speed
 function [passed,criticalSpeed] = CorrectCriticalSpeed(dA,dmid,dB,safetyFactor)
+    % some constants
     operatingCondition = 1200*2*pi/60;
-    passed = deflectionDueToWeight(dA,dmid,dB,0.1); 
-    criticalSpeed =1;
+    g = 9.81;
+    [d_AtoM1, d_AtoM2,d_AtoM3,d_AtoM4,d_AtoM5,d_AtoC,d_AtoD] = populateDistances();
+    
+    % now we should get some deflections:
+    [F_A, F_g1, F_g2,F_g3, F_g4, F_g5, F_B] = weightsBalance(dA,dmid,dB);
+    deflection_M1 = deflectionAtX(dA,dmid,dB,d_AtoM1);
+    
+    passed = deflectionAtX(dA,dmid,dB,0.7);
+    criticalSpeed =
 end 
 
 % passes on a list of known distance values
@@ -50,10 +58,9 @@ function [F_A, F_g1, F_g2,F_g3, F_g4, F_g5, F_B] = weightsBalance(dA,dmid,dB)
 end 
 
 %computes the deflection due to each mass contribution. 
-function [ deflection_A,deflection_Mass1,deflection_Mass2,deflection_Mass3,deflection_Mass4,deflection_Mass5,deflection_JumpC,deflection_JumpD] = singularityStages(dA, dmid, dB)
+function [ deflection_A,deflection_Mass1,deflection_Mass2,deflection_Mass3,deflection_Mass4,deflection_Mass5,deflection_JumpC,deflection_JumpD] = singularityStages(dA, dmid, dB,x)
     %collecting the constants that are known
     [d_AtoM1, d_AtoM2,d_AtoM3,d_AtoM4,d_AtoM5,d_AtoC,d_AtoD] = populateDistances();
- 
     %other calculated constants
     [I,J] = compute_moments(dA,dmid,dB);
     I_1 = I(1);
@@ -78,27 +85,35 @@ end
 % computes the final deflection at a x-coordinate
 function deflectionTotal = deflectionAtX(dA, dmid, dB,x)
 
+    %known constants
     totalLength = 0.7;
     E = 184E9;
+    [d_AtoM1, d_AtoM2,d_AtoM3,d_AtoM4,d_AtoM5,d_AtoC,d_AtoD] = populateDistances();
+    
+    
     %solving unkown coefficient
-    c
+    [deflectionA1,dMass1,dMass2,dMass3,dMass4,dMass5,dJumpC,dJumpD] = singularityStages(dA, dmid, dB,totalLength);
+    [deflection_A,deflection_Mass1,deflection_Mass2,deflection_Mass3,deflection_Mass4,deflection_Mass5,deflection_JumpC,deflection_JumpD] = singularityStages(dA, dmid, dB,x);
+    c_1 = -1*1/totalLength*(deflectionA1+dMass1+dMass2+dMass3+dMass4+dMass5+dJumpC+dJumpD);
+   
+   
     %simulating the effects of the various singularity functions
     if(x <= d_AtoM1)
-        deflectionTotal = deflection_A; 
-    elseif (x>d_AtoM1 && x> x<= d_AtoM2)
-        deflectionTotal = deflection_A+ deflection_Mass1; 
+        deflectionTotal = deflection_A + c_1*x; 
+    elseif (x>d_AtoM1 && x<= d_AtoM2)
+        deflectionTotal = deflection_A+ deflection_Mass1+ c_1*x; 
     elseif( x>d_AtoM2 && x<=d_AtoC)
-        deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2; 
-    elseif (x>d_AtoC && x> x<= d_AtoM3)
-        deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2+ deflection_JumpC; 
-    elseif (x>d_AtoM3 && x> x<= d_AtoD)
-        deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2+ deflection_Mass3;
-    elseif (x>d_AtoD && x> x<= d_AtoM4)
-        deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2+ deflection_Mass3+ deflection_JumpD;
-    elseif (x>d_AtoM4 && x> x<= d_AtoM5)
-        deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2+ deflection_Mass3+ deflection_JumpD+ deflection_Mass4;
-    elseif (x>d_AtoM4 && x> x<= totalLength)
-        deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2+ deflection_Mass3+ deflection_JumpD+ deflection_Mass4+ deflection_Mass5;
+        deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2+ c_1*x; 
+    elseif (x>d_AtoC &&  x<= d_AtoM3)
+        deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2+ deflection_JumpC+ c_1*x; 
+    elseif (x>d_AtoM3 &&  x<= d_AtoD)
+        deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2+ deflection_Mass3+ c_1*x;
+    elseif (x>d_AtoD &&  x<= d_AtoM4)
+        deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2+ deflection_Mass3+ deflection_JumpD+ c_1*x;
+    elseif (x>d_AtoM4 && x<= d_AtoM5)
+        deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2+ deflection_Mass3+ deflection_JumpD+ deflection_Mass4+ c_1*x;
+    elseif (x>d_AtoM4 &&  x<= totalLength)
+        deflectionTotal = deflection_A  + deflection_Mass1 + deflection_Mass2+ deflection_Mass3+ deflection_JumpD+ deflection_Mass4+ deflection_Mass5+c_1*x;
     end 
     deflectionTotal = 1/E* deflectionTotal;
 
