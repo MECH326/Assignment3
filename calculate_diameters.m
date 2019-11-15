@@ -6,14 +6,16 @@ d3 = 0.080;    % bearing bore
 
 [A, B] = calc_reaction_forces(d2, d1, d2);
 
-F_H = [900 -6600 -2400];
-F_S = [0 -1200 -3300];
-M_H = 6.3;
-M_S = 12.6;
-p = 7870;
+F_H = [900 -6600 -2400];    % N
+F_S = [0 -1200 -3300];      % N
+M_H = 6.3;  % kg
+M_S = 12.6; % kg
+p = 7870;   % kg/m^3
 T = 660;
+R_H = abs(T/F_H(2));
+R_S = abs(T/F_S(3));
 
-[sigma_bend, sigma_axial, tau, location, d] = Stresses(A,B,F_H,F_S,d2/2,d1/2,d2/2,p,T,M_H, M_S);
+[sigma_bend, sigma_axial, tau, location, d] = Stresses(A,B,F_H,F_S,d2/2,d1/2,d2/2,p,T,M_H, M_S, R_H, R_S);
 
 Kt_bend = 2.2;
 Kt_axial = 2.2;

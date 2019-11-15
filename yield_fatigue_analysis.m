@@ -35,11 +35,11 @@ function [n_yield, n_fatigue] = yield_fatigue_analysis(sigma_bend, sigma_axial, 
     Sut = 420e6;
     Se_prime = 0.5*Sut;
     % Determine Marin factors
-    ka = (4.51)*Sut^(-0.265); % hot-rolled surface finish
-    if d < 0.051
-        kb = 1.24*d^(-0.107);
+    ka = (4.51)*(Sut/10^6)^(-0.265); % cold-drawn
+    if d <= 0.051
+        kb = 1.24*(1000*d)^(-0.107);
     else
-        kb = 1.51*d^(-0.157);
+        kb = 1.51*(1000*d)^(-0.157);
     end
     % Shigleys: When torsion is combined with other stresses, such as
     % bending, kc = 1 and the combined loading is managed by using the effective von Mises stress as in Sec. 5–5.
