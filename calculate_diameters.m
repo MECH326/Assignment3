@@ -29,4 +29,6 @@ qs = 0.7;
 
 n_desired = 3.0;
 
-passed = CriticalSpeed(d2, d1, d2, n_desired);
+pass_critical_speed = CorrectCriticalSpeed(d2, d1, d2, n_desired);
+
+pass_deflection = deflection(d2, d1, d2);
